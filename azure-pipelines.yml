@@ -10,9 +10,7 @@ trigger:
   branches:
     include:
     - master
-    - azure-pipelines
-    - monorepo-integration
-    - petong/monorepo-conditonal
+    - petong/debug_augur_core_failure
 
 jobs:
   - job: Build_Core_Docker
