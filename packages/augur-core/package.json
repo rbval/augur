@@ -15,7 +15,7 @@
   },
   "scripts": {
     "lint": "solium --dir source --reporter=gcc",
-    "build:source": "tsc --version; tsc",
+    "build:source": "tsc",
     "build:contracts": "npm run build:flattener && . venv/bin/activate && node -r ts-node/register source/deployment/compileContracts.ts",
     "build:interfaces": "npm run build:flattener && . venv/bin/activate && node -r ts-node/register source/tools/generateContractInterfaces.ts",
     "build:flattener": "source/tools/installSolidityFlattener",
@@ -35,7 +35,7 @@
     "deploy:foundation": "npm run deploy:net -- foundation",
     "deploy": "npm run deploy:net -- aura clique rinkeby",
     "artifacts": "bash source/support/artifacts/run.sh",
-    "docker:build": "npm run docker:build:python2-and-3 && docker build --tag augurproject/augur-core:monorepo -f ./source/support/Dockerfile ./../..",
+    "docker:build": "npm run docker:build:python2-and-3 && docker build --cache-from augurproject/augur-core:monorepo --tag augurproject/augur-core:monorepo -f ./source/support/Dockerfile ./../..",
     "docker:build:python2-and-3": "docker build --tag augurproject/python2-and-3:monorepo -f ./source/support/python2-and-3/Dockerfile ./../..",
     "docker:push": "docker push augurproject/augur-core:monorepo",
     "docker:run:npm": "docker run --rm augurproject/augur-core:monorepo",
