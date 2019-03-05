@@ -976,12 +976,24 @@
   resolved "https://registry.yarnpkg.com/@gerhobbelt/xregexp/-/xregexp-3.2.0-22.tgz#66e6640eb6a5bba78ad9ea8187f6910b53b6c0ea"
   integrity sha512-TRu38Z67VxFSMrBP3z/ORiJVQqp56ulidZirbobtmJnVGBWLdo4GbHtihgIJFGieIZuk+LxmPkK45SY+SQsR3A==
 
-"@ledgerhq/hw-app-eth@4.35.0":
-  version "4.35.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-eth/-/hw-app-eth-4.35.0.tgz#3a8c1b0db87224a24ff5441a0e819122e5585f2d"
-  integrity sha512-MSDr8+CaoXhtm64ELuI/8wpcfmrMUjzGJgASY6bnjc82vAW+6sHNZlTU0zWRTZxqQUuZ8WpuJP159cf92MWq3g==
+"@ledgerhq/devices@^4.43.0":
+  version "4.43.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-4.43.0.tgz#5a26b2d74df52677021796c389ac49b1ddf4bed4"
+  integrity sha512-vU3a3sSavcm8cHkBXHQnxYAm0fay/rigUvh4kam9dSf3wfJMFP/bnymGfjJQyupxroVtgmjw55juFuBQho38Cw==
   dependencies:
-    "@ledgerhq/hw-transport" "^4.35.0"
+    "@ledgerhq/errors" "^4.43.0"
+
+"@ledgerhq/errors@^4.43.0":
+  version "4.43.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-4.43.0.tgz#f5dd100952ab7da384a06b1e213a2cb21c712677"
+  integrity sha512-XEO6XCvXskerddJinAraembl5dWdOV1My1JrclEAALvPdXuU+OVUdAjesXZV08WHnL8pIkixJIgk9QogcyA+NQ==
+
+"@ledgerhq/hw-app-eth@4.43.0":
+  version "4.43.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-eth/-/hw-app-eth-4.43.0.tgz#fcbb162b044b80a140bc99562b5902a48b23e1a4"
+  integrity sha512-PjwOWPujQ3Mj3WhoQBUUOt8yoSKjgb7BRpfN/7V0xR4on2WvIJlgst30JT/occhkCPnqhfW/+veZuRa82I38Fg==
+  dependencies:
+    "@ledgerhq/hw-transport" "^4.43.0"
 
 "@ledgerhq/hw-transport-u2f@^4.21.0":
   version "4.32.0"
@@ -998,11 +1010,13 @@
   dependencies:
     events "^3.0.0"
 
-"@ledgerhq/hw-transport@^4.35.0":
-  version "4.35.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-4.35.0.tgz#aa7b851111ed759cd7489fa07a7b34c1773e8314"
-  integrity sha512-o8ekdoCkHMvOByIKDmAMNDjm8Q5cu+sbqmebPtGrHAPbgIZBUbNA5UupY/Om+xypdxXYnuBw+MF8FyIVOjnIsg==
+"@ledgerhq/hw-transport@^4.43.0":
+  version "4.43.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-4.43.0.tgz#6d4d82250316b1d533f5bd291f254439c3964095"
+  integrity sha512-6Rox3yYLaZGANPgNeD1evSlnzYwCDIFLYx5As5A1swsXGwEtbXSlHf4RLwPKL+QDqcUNkInrDoOmb5a3ikg2ww==
   dependencies:
+    "@ledgerhq/devices" "^4.43.0"
+    "@ledgerhq/errors" "^4.43.0"
     events "^3.0.0"
 
 "@lerna/add@3.10.6":
@@ -1774,6 +1788,11 @@
   version "10.12.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
+
+"@types/node@10.12.29":
+  version "10.12.29"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.29.tgz#c2c8d2d27bb55649fbafe8ea1731658421f38acf"
+  integrity sha512-J/tnbnj8HcsBgCe2apZbdUpQ7hs4d7oZNTYA5bekWdP0sr2NGsOpI/HRdDroEi209tEvTcTtxhD0FfED3DhEcw==
 
 "@types/pouchdb-adapter-fruitdown@*":
   version "6.1.2"
