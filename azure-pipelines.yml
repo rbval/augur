@@ -190,13 +190,13 @@ jobs:
     - Build_Core_Docker
       #- Test_Augur_Core
     pool:
-      vmImage: 'macos-10.13'
+      vmImage: 'Ubuntu 16.04'
     steps:
-        #    - task: DockerInstaller@0
-        #      displayName: Docker Installer
-        #      inputs:
-        #        dockerVersion: 18.09.3
-        #        releaseType: stable
+    - task: DockerInstaller@0
+      displayName: Docker Installer
+      inputs:
+        dockerVersion: 18.09.3
+        releaseType: stable
     - bash: |
         set -euo pipefail
         for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
