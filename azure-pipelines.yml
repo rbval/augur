@@ -195,8 +195,8 @@ jobs:
     - task: DockerInstaller@0
       displayName: Docker Installer
       inputs:
-        dockerVersion: 18.09.3
-        releaseType: stable
+        dockerVersion: 0.0.0-20190306010238-27492c9
+        releaseType: nightly
     - bash: |
         set -euo pipefail
         for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
