@@ -192,6 +192,11 @@ jobs:
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
+    - task: DockerInstaller@0
+      displayName: Docker Installer
+      inputs:
+        dockerVersion: 18.09.3-ce
+        releaseType: stable
     - bash: |
         set -euo pipefail
         for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
@@ -205,6 +210,7 @@ jobs:
     - script: |
         set -euo pipefail
         docker --version
+        docker info
         echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
         yarn docker:build:all
 
