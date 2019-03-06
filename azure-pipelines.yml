@@ -195,7 +195,7 @@ jobs:
     - task: DockerInstaller@0
       displayName: Docker Installer
       inputs:
-        dockerVersion: 18.09.3-ce
+        dockerVersion: 18.09.3
         releaseType: stable
     - bash: |
         set -euo pipefail
