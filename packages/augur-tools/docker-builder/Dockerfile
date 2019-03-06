@@ -47,10 +47,10 @@ RUN apk add --no-cache \
 WORKDIR /
 COPY --from=geth /common_start.sh /common_start.sh
 COPY --from=geth /start.sh /start.sh
-COPY --from=augur-build /opt /opt
 COPY --from=geth /geth /geth
-COPY --from=augur-build /usr/local /usr/local
 COPY --from=geth /augur/packages/augur-artifacts /augur/packages/augur-artifacts
+COPY --from=augur-build /opt /opt
+COPY --from=augur-build /usr/local /usr/local
 
 
 EXPOSE 8545 8546 30303 30303/udp 30304/udp
