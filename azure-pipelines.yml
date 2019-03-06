@@ -190,7 +190,7 @@ jobs:
     - Build_Core_Docker
       #- Test_Augur_Core
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'macos-10.13'
     steps:
     - task: DockerInstaller@0
       displayName: Docker Installer
