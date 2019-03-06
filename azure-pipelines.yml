@@ -211,7 +211,8 @@ jobs:
         docker pull augurproject/augur-core:$(AUGUR_CORE_TAG)
         #docker tag augurproject/augur-core:$(AUGUR_CORE_TAG) augurproject/augur-core:latest
         yarn docker:build:augur
-        docker tag augur-build augurproject/augur-build:$(AUGUR_CORE_TAG)
+        docker images
+        docker tag augurproject/augur-build augurproject/augur-build:$(AUGUR_CORE_TAG)
         yarn workspace @augurproject/core artifacts
         yarn workspace @augurproject/tools docker:build
         if [[ "$(Build.SourceBranchName)" == "master" ]]; then
