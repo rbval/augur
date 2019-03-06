@@ -208,15 +208,15 @@ jobs:
         docker info
         echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
         docker pull augurproject/augur-build:latest
-        docker tag augur-build:$(AUGUR_CORE_TAG) augurproject/augur-build:latest
         docker pull augurproject/augur-core:$(AUGUR_CORE_TAG)
         docker tag augur-core:$(AUGUR_CORE_TAG) augurproject/augur-core:latest
-        docker pull augurproject/augur-build:latest
         yarn docker:build:augur
+        docker tag augur-build augurproject/augur-build:$(AUGUR_CORE_TAG)
         yarn workspace @augurproject/core artifacts
         yarn workspace @augurproject/tools docker:build
         if [[ "$(Build.SourceBranchName)" == "master" ]]; then
             yarn workspace @augurproject/tools docker:push
+            docker push augurproject/augur-build:latest
         fi
         #      condition: |
         #        and
