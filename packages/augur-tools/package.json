@@ -54,6 +54,7 @@
     "ethjs-signer": "0.1.1"
   },
   "devDependencies": {
+    "@types/node": "10.12.29",
     "options-parser": "0.4.0",
     "ts-node": "7.0.1"
   }
