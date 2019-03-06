@@ -12,7 +12,7 @@ trigger:
     - master
     - azure-pipelines
     - monorepo-integration
-    - petong/monorepo-conditonal
+    - test-docker-layer-not-found-error
 
 jobs:
   - job: Build_Core_Docker
@@ -204,16 +204,17 @@ jobs:
           done
     - script: |
         set -euo pipefail
+        docker --version
         echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
         yarn docker:build:all
 
         if [[ "$(Build.SourceBranchName)" == "master" ]]; then
             yarn workspace @augurproject/tools docker:push
         fi
-      condition: |
-        and
-        (
-            succeeded(),
-            eq(variables.AUGUR_CORE, 'true')
-        )
+        #      condition: |
+        #        and
+        #        (
+        #            succeeded(),
+        #            eq(variables.AUGUR_CORE, 'true')
+        #        )
       displayName: 'build and (maybe) push docker image'
