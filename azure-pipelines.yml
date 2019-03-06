@@ -47,143 +47,143 @@ jobs:
           docker push $CORE_IMAGE_BUILD
         condition: eq(variables.AUGUR_CORE, 'true')
 
-  - job: Test_Augur_Core
-    dependsOn: Build_Core_Docker
-    pool:
-      vmImage: 'Ubuntu 16.04'
-    strategy:
-      maxParallel: 10
-      matrix:
-        trading_and_libs:
-          TESTS: tests/test*.py tests/libraries tests/trading
-        reporting:
-          TESTS: tests/reporting
-        fuzzy:
-          TESTS: tests/fuzzy
-        unit:
-          TESTS: tests/unit
-        trading_and_libs_subfork:
-          TESTS: tests/test*.py tests/libraries tests/trading --subFork
-        reporting_subfork:
-          TESTS: tests/reporting --subFork
-        fuzzy_subfork:
-          TESTS: tests/fuzzy --subFork
-        unit_subfork:
-          TESTS: tests/unit --subFork
-        geth_integration:
-          TESTS: integration:geth
-        parity_integration:
-          TESTS: integration:parity
-        security_mithril:
-          TESTS: security:mythril
-        security_main:
-          TESTS: security:maian
-
-    steps:
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6.5'
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-      - bash: |
-          set -euo pipefail
-          for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
-            do
-              echo "$f"
-              if [[ $f =~ .*augur-core.* ]]
-              then
-                echo "##vso[task.setVariable variable=AUGUR_CORE]true";
-              fi
-            done
-      - script: |
-          set -euo pipefail
-          which node
-          node --version
-          docker pull $CORE_IMAGE_BUILD
-          docker tag $CORE_IMAGE_BUILD $CORE_IMAGE_LATEST
-          if [[ "$TESTS" == "integration:geth" ]]; then
-            yarn workspace @augurproject/core docker:run:test:integration:geth;
-          elif [[ "$TESTS" == "integration:parity" ]]; then
-            yarn workspace @augurproject/core docker:run:test:integration:parity;
-          elif [[ "$TESTS" == "security:mythril" ]]; then
-            yarn workspace @augurproject/core docker:run:test:security:mythril;
-            cat $(find . -name test-results.log)
-          elif [[ "$TESTS" == "security:maian" ]]; then
-            yarn workspace @augurproject/core docker:run:test:security:maian;
-          elif [[ "$TESTS" == "security:smt" ]]; then
-            yarn workspace @augurproject/core docker:run:test:security:smt;
-          elif [[ "$TESTS" == "security:oyente" ]]; then
-            yarn workspace @augurproject/core docker:run:test:security:oyente;
-          else
-            yarn workspace @augurproject/core docker:run:test:unit -- $TESTS;
-          fi
-        condition: eq(variables.AUGUR_CORE, 'true')
-
-  # - job: Test_Augur_UI_and_Node
-  #   displayName: 'Test augur UI and augur-node'
-  #   pool:
-  #     vmImage: 'Ubuntu 16.04'
-  #   strategy:
-  #     matrix:
-  #       node_8_x:
-  #         node_version: 8.x
-  #       node_9_x:
-  #         node_version: 9.x
-  #       node_10_x:
-  #         node_version: 10.x
-  #   steps:
-  #     - task: NodeTool@0
-  #       inputs:
-  #         versionSpec: $(node_version)
-  #     - script: |
-  #         set -euo pipefail
-  #         which node
-  #         node --version
-  #         yarn workspace @augurproject/node add sqlite3 --force --build-from-source
-  #         yarn install --ignore-scripts --frozen-lockfile
-  #       displayName: 'Install Dependencies'
-  #     - script: |
-  #         yarn test --forceExit --detectOpenHandles
-  #       displayName: 'Run Tests'
-  #     - task: PublishTestResults@2
-  #       inputs:
-  #         testResultsFormat: 'JUnit'
-  #         testResultsFiles: 'junit.xml'
-
-  - job: Test_Augur_js
-    pool:
-      vmImage: 'Ubuntu 16.04'
-    strategy:
-      matrix:
-        node_8_x:
-          node_version: 8.x
-        node_9_x:
-          node_version: 9.x
-        node_10_x:
-          node_version: 10.x
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: $(node_version)
-      - bash: |
-          set -euo pipefail
-          for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
-            do
-              echo "$f"
-              if [[ $f =~ .*augur\.js.* ]]
-              then
-                echo "##vso[task.setVariable variable=AUGUR_CORE]true";
-              fi
-            done
-      - script: |
-          set -euo pipefail
-          which node
-          node --version
-          yarn install --ignore-scripts --frozen-lockfile
-          npx lerna run test --stream --scope augur.js
-        displayName: 'test augur.js'
-        condition: eq(variables.AUGUR, 'true')
+        #  - job: Test_Augur_Core
+        #    dependsOn: Build_Core_Docker
+        #    pool:
+        #      vmImage: 'Ubuntu 16.04'
+        #    strategy:
+        #      maxParallel: 10
+        #      matrix:
+        #        trading_and_libs:
+        #          TESTS: tests/test*.py tests/libraries tests/trading
+        #        reporting:
+        #          TESTS: tests/reporting
+        #        fuzzy:
+        #          TESTS: tests/fuzzy
+        #        unit:
+        #          TESTS: tests/unit
+        #        trading_and_libs_subfork:
+        #          TESTS: tests/test*.py tests/libraries tests/trading --subFork
+        #        reporting_subfork:
+        #          TESTS: tests/reporting --subFork
+        #        fuzzy_subfork:
+        #          TESTS: tests/fuzzy --subFork
+        #        unit_subfork:
+        #          TESTS: tests/unit --subFork
+        #        geth_integration:
+        #          TESTS: integration:geth
+        #        parity_integration:
+        #          TESTS: integration:parity
+        #        security_mithril:
+        #          TESTS: security:mythril
+        #        security_main:
+        #          TESTS: security:maian
+        #
+        #    steps:
+        #      - task: UsePythonVersion@0
+        #        inputs:
+        #          versionSpec: '3.6.5'
+        #      - task: NodeTool@0
+        #        inputs:
+        #          versionSpec: '10.x'
+        #      - bash: |
+        #          set -euo pipefail
+        #          for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
+        #            do
+        #              echo "$f"
+        #              if [[ $f =~ .*augur-core.* ]]
+        #              then
+        #                echo "##vso[task.setVariable variable=AUGUR_CORE]true";
+        #              fi
+        #            done
+        #      - script: |
+        #          set -euo pipefail
+        #          which node
+        #          node --version
+        #          docker pull $CORE_IMAGE_BUILD
+        #          docker tag $CORE_IMAGE_BUILD $CORE_IMAGE_LATEST
+        #          if [[ "$TESTS" == "integration:geth" ]]; then
+        #            yarn workspace @augurproject/core docker:run:test:integration:geth;
+        #          elif [[ "$TESTS" == "integration:parity" ]]; then
+        #            yarn workspace @augurproject/core docker:run:test:integration:parity;
+        #          elif [[ "$TESTS" == "security:mythril" ]]; then
+        #            yarn workspace @augurproject/core docker:run:test:security:mythril;
+        #            cat $(find . -name test-results.log)
+        #          elif [[ "$TESTS" == "security:maian" ]]; then
+        #            yarn workspace @augurproject/core docker:run:test:security:maian;
+        #          elif [[ "$TESTS" == "security:smt" ]]; then
+        #            yarn workspace @augurproject/core docker:run:test:security:smt;
+        #          elif [[ "$TESTS" == "security:oyente" ]]; then
+        #            yarn workspace @augurproject/core docker:run:test:security:oyente;
+        #          else
+        #            yarn workspace @augurproject/core docker:run:test:unit -- $TESTS;
+        #          fi
+        #        condition: eq(variables.AUGUR_CORE, 'true')
+        #
+        #  # - job: Test_Augur_UI_and_Node
+        #  #   displayName: 'Test augur UI and augur-node'
+        #  #   pool:
+        #  #     vmImage: 'Ubuntu 16.04'
+        #  #   strategy:
+        #  #     matrix:
+        #  #       node_8_x:
+        #  #         node_version: 8.x
+        #  #       node_9_x:
+        #  #         node_version: 9.x
+        #  #       node_10_x:
+        #  #         node_version: 10.x
+        #  #   steps:
+        #  #     - task: NodeTool@0
+        #  #       inputs:
+        #  #         versionSpec: $(node_version)
+        #  #     - script: |
+        #  #         set -euo pipefail
+        #  #         which node
+        #  #         node --version
+        #  #         yarn workspace @augurproject/node add sqlite3 --force --build-from-source
+        #  #         yarn install --ignore-scripts --frozen-lockfile
+        #  #       displayName: 'Install Dependencies'
+        #  #     - script: |
+        #  #         yarn test --forceExit --detectOpenHandles
+        #  #       displayName: 'Run Tests'
+        #  #     - task: PublishTestResults@2
+        #  #       inputs:
+        #  #         testResultsFormat: 'JUnit'
+        #  #         testResultsFiles: 'junit.xml'
+        #
+        #  - job: Test_Augur_js
+        #    pool:
+        #      vmImage: 'Ubuntu 16.04'
+        #    strategy:
+        #      matrix:
+        #        node_8_x:
+        #          node_version: 8.x
+        #        node_9_x:
+        #          node_version: 9.x
+        #        node_10_x:
+        #          node_version: 10.x
+        #    steps:
+        #      - task: NodeTool@0
+        #        inputs:
+        #          versionSpec: $(node_version)
+        #      - bash: |
+        #          set -euo pipefail
+        #          for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
+        #            do
+        #              echo "$f"
+        #              if [[ $f =~ .*augur\.js.* ]]
+        #              then
+        #                echo "##vso[task.setVariable variable=AUGUR_CORE]true";
+        #              fi
+        #            done
+        #      - script: |
+        #          set -euo pipefail
+        #          which node
+        #          node --version
+        #          yarn install --ignore-scripts --frozen-lockfile
+        #          npx lerna run test --stream --scope augur.js
+        #        displayName: 'test augur.js'
+        #        condition: eq(variables.AUGUR, 'true')
 
   - job: Docker_populated_geth_images
     dependsOn:
