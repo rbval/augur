@@ -15,37 +15,37 @@ trigger:
     - test-docker-layer-not-found-error
 
 jobs:
-    #  - job: Build_Core_Docker
-    #    pool:
-    #      vmImage: 'Ubuntu 16.04'
-    #    steps:
-    #      - task: UsePythonVersion@0
-    #        inputs:
-    #          versionSpec: '3.6.5'
-    #      - task: NodeTool@0
-    #        inputs:
-    #          versionSpec: '10.x'
-    #      - bash: |
-    #          set -euo pipefail
-    #          echo "Build SourceBranch: $(Build.SourceBranch)"
-    #          for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
-    #            do
-    #              echo "$f"
-    #              if [[ $f =~ .*augur-core.* ]]
-    #              then
-    #                echo "##vso[task.setVariable variable=AUGUR_CORE]true";
-    #              fi
-    #            done
-    #      - script: |
-    #          set -euo pipefail
-    #          which node
-    #          node --version
-    #          echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
-    #          docker pull $CORE_IMAGE_LATEST;
-    #          yarn workspace @augurproject/core docker:build;
-    #          docker tag $CORE_IMAGE_LATEST $CORE_IMAGE_BUILD;
-    #          docker push $CORE_IMAGE_BUILD
-    #        condition: eq(variables.AUGUR_CORE, 'true')
+  - job: Build_Core_Docker
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6.5'
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+      - bash: |
+          set -euo pipefail
+          echo "Build SourceBranch: $(Build.SourceBranch)"
+          for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
+            do
+              echo "$f"
+              if [[ $f =~ .*augur-core.* ]]
+              then
+                echo "##vso[task.setVariable variable=AUGUR_CORE]true";
+              fi
+            done
+      - script: |
+          set -euo pipefail
+          which node
+          node --version
+          echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
+          docker pull $CORE_IMAGE_LATEST;
+          yarn workspace @augurproject/core docker:build;
+          docker tag $CORE_IMAGE_LATEST $CORE_IMAGE_BUILD;
+          docker push $CORE_IMAGE_BUILD
+        condition: eq(variables.AUGUR_CORE, 'true')
 
         #  - job: Test_Augur_Core
         #    dependsOn: Build_Core_Docker
