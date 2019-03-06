@@ -192,11 +192,6 @@ jobs:
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
-        #    - task: DockerInstaller@0
-        #      displayName: Docker Installer
-        #      inputs:
-        #        dockerVersion: 0.0.0-20190306010238-27492c9
-        #        releaseType: nightly
     - bash: |
         set -euo pipefail
         for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
@@ -218,9 +213,6 @@ jobs:
         docker tag augur-core:$(AUGUR_CORE_TAG) augurproject/augur-core:latest
         yarn workspace @augurproject/core artifacts
         yarn workspace @augurproject/tools docker:build
-
-#yarn docker:build:all
-
         if [[ "$(Build.SourceBranchName)" == "master" ]]; then
             yarn workspace @augurproject/tools docker:push
         fi
