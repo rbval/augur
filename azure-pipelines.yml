@@ -189,7 +189,7 @@ jobs:
 
   - job: Docker_populated_geth_images
     dependsOn:
-        #- Build_Core_Docker
+      - Build_Core_Docker
       #- Test_Augur_Core
     pool:
       vmImage: 'Ubuntu 16.04'
