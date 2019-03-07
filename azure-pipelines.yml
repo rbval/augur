@@ -190,8 +190,13 @@ jobs:
       - Build_Core_Docker
       #- Test_Augur_Core
     pool:
-      vmImage: 'macOS-10.13'
+      vmImage: 'Ubuntu 16.04'
     steps:
+    - task: DockerInstaller@0
+      displayName: Docker Installer
+      inputs:
+        dockerVersion: 18.06.1
+        releaseType: stable
     - bash: |
         set -euo pipefail
         for f in $(git whatchanged --name-only --pretty="" origin/master..HEAD);
@@ -203,9 +208,6 @@ jobs:
             fi
           done
     - script: |
-        brew update
-        brew tap caskroom/cask
-        brew cask install docker
         set -euxo pipefail
         docker --version
         docker info
