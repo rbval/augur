@@ -190,7 +190,7 @@ jobs:
       - Build_Core_Docker
       #- Test_Augur_Core
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'macOS-10.13'
     steps:
     - bash: |
         set -euo pipefail
@@ -203,6 +203,7 @@ jobs:
             fi
           done
     - script: |
+        brew install docker
         set -euxo pipefail
         docker --version
         docker info
