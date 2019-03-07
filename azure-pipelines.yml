@@ -203,7 +203,9 @@ jobs:
             fi
           done
     - script: |
-        brew install docker
+        brew update
+        brew tap caskroom/cask
+        brew cask install docker
         set -euxo pipefail
         docker --version
         docker info
